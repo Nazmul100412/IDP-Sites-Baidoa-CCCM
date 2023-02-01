@@ -1,0 +1,725 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="initial-scale=1,user-scalable=no,maximum-scale=1,width=device-width">
+        <meta name="mobile-web-app-capable" content="yes">
+        <meta name="apple-mobile-web-app-capable" content="yes">
+        <link rel="stylesheet" href="css/leaflet.css"><link rel="stylesheet" href="css/L.Control.Locate.min.css">
+        <link rel="stylesheet" href="css/qgis2web.css"><link rel="stylesheet" href="css/fontawesome-all.min.css">
+        <link rel="stylesheet" href="css/leaflet-search.css">
+        <link rel="stylesheet" href="css/leaflet-control-geocoder.Geocoder.css">
+        <link rel="stylesheet" href="css/leaflet-measure.css">
+        <style>
+        html, body, #map {
+            width: 100%;
+            height: 100%;
+            padding: 0;
+            margin: 0;
+        }
+        </style>
+        <title></title>
+    </head>
+    <body>
+        <div id="map">
+        </div>
+        <script src="js/qgis2web_expressions.js"></script>
+        <script src="js/leaflet.js"></script><script src="js/L.Control.Locate.min.js"></script>
+        <script src="js/leaflet.rotatedMarker.js"></script>
+        <script src="js/leaflet.pattern.js"></script>
+        <script src="js/leaflet-hash.js"></script>
+        <script src="js/Autolinker.min.js"></script>
+        <script src="js/rbush.min.js"></script>
+        <script src="js/labelgun.min.js"></script>
+        <script src="js/labels.js"></script>
+        <script src="js/leaflet-control-geocoder.Geocoder.js"></script>
+        <script src="js/leaflet-measure.js"></script>
+        <script src="js/leaflet-search.js"></script>
+        <script src="data/Somalia_OPZ_Boundaries_4.js"></script>
+        <script src="data/ADM2_Somalia_State_5.js"></script>
+        <script src="data/ZoneClusterBoundary_6.js"></script>
+        <script src="data/ZoneClusterName_7.js"></script>
+        <script src="data/IDPSiteDemarcation_8.js"></script>
+        <script src="data/IDPSitesLocations_9.js"></script>
+        <script src="data/EducationFacilities_10.js"></script>
+        <script>
+        var map = L.map('map', {
+            zoomControl:true, maxZoom:28, minZoom:1
+        }).fitBounds([[3.0772603586056837,43.5940648402639],[3.1551843936752837,43.721383345650835]]);
+        var hash = new L.Hash(map);
+        map.attributionControl.setPrefix('<a href="https://github.com/tomchadwin/qgis2web" target="_blank">qgis2web</a> &middot; <a href="https://leafletjs.com" title="A JS library for interactive maps">Leaflet</a> &middot; <a href="https://qgis.org">QGIS</a>');
+        var autolinker = new Autolinker({truncate: {length: 30, location: 'smart'}});
+        L.control.locate({locateOptions: {maxZoom: 19}}).addTo(map);
+        var measureControl = new L.Control.Measure({
+            position: 'topleft',
+            primaryLengthUnit: 'meters',
+            secondaryLengthUnit: 'kilometers',
+            primaryAreaUnit: 'sqmeters',
+            secondaryAreaUnit: 'hectares'
+        });
+        measureControl.addTo(map);
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .innerHTML = '';
+        document.getElementsByClassName('leaflet-control-measure-toggle')[0]
+        .className += ' fas fa-ruler';
+        var bounds_group = new L.featureGroup([]);
+        function setBounds() {
+        }
+        map.createPane('pane_OpenStreetMap_0');
+        map.getPane('pane_OpenStreetMap_0').style.zIndex = 400;
+        var layer_OpenStreetMap_0 = L.tileLayer('http://a.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+            pane: 'pane_OpenStreetMap_0',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 19
+        });
+        layer_OpenStreetMap_0;
+        map.addLayer(layer_OpenStreetMap_0);
+        map.createPane('pane_GoogleSatellite_1');
+        map.getPane('pane_GoogleSatellite_1').style.zIndex = 401;
+        var layer_GoogleSatellite_1 = L.tileLayer('https://mt1.google.com/vt/lyrs=s&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleSatellite_1',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+        });
+        layer_GoogleSatellite_1;
+        map.addLayer(layer_GoogleSatellite_1);
+        map.createPane('pane_GoogleTerrain_2');
+        map.getPane('pane_GoogleTerrain_2').style.zIndex = 402;
+        var layer_GoogleTerrain_2 = L.tileLayer('http://mt0.google.com/vt/lyrs=p&hl=en&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleTerrain_2',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 30
+        });
+        layer_GoogleTerrain_2;
+        map.addLayer(layer_GoogleTerrain_2);
+        map.createPane('pane_GoogleHybrid_3');
+        map.getPane('pane_GoogleHybrid_3').style.zIndex = 403;
+        var layer_GoogleHybrid_3 = L.tileLayer('http://mt0.google.com/vt/lyrs=y&hl=en&x={x}&y={y}&z={z}', {
+            pane: 'pane_GoogleHybrid_3',
+            opacity: 1.0,
+            attribution: '',
+            minZoom: 1,
+            maxZoom: 28,
+            minNativeZoom: 0,
+            maxNativeZoom: 30
+        });
+        layer_GoogleHybrid_3;
+        map.addLayer(layer_GoogleHybrid_3);
+        function pop_Somalia_OPZ_Boundaries_4(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['NAME'] !== null ? autolinker.link(feature.properties['NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin2Name'] !== null ? autolinker.link(feature.properties['admin2Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin2Pcod'] !== null ? autolinker.link(feature.properties['admin2Pcod'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin1Name'] !== null ? autolinker.link(feature.properties['admin1Name'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['admin1Pcod'] !== null ? autolinker.link(feature.properties['admin1Pcod'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OPZ_id'] !== null ? autolinker.link(feature.properties['OPZ_id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Leng'] !== null ? autolinker.link(feature.properties['Shape_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Shape_Area'] !== null ? autolinker.link(feature.properties['Shape_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_Somalia_OPZ_Boundaries_4_0() {
+            return {
+                pane: 'pane_Somalia_OPZ_Boundaries_4',
+                opacity: 1,
+                color: 'rgba(77,175,74,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_Somalia_OPZ_Boundaries_4');
+        map.getPane('pane_Somalia_OPZ_Boundaries_4').style.zIndex = 404;
+        map.getPane('pane_Somalia_OPZ_Boundaries_4').style['mix-blend-mode'] = 'normal';
+        var layer_Somalia_OPZ_Boundaries_4 = new L.geoJson(json_Somalia_OPZ_Boundaries_4, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_Somalia_OPZ_Boundaries_4',
+            layerName: 'layer_Somalia_OPZ_Boundaries_4',
+            pane: 'pane_Somalia_OPZ_Boundaries_4',
+            onEachFeature: pop_Somalia_OPZ_Boundaries_4,
+            style: style_Somalia_OPZ_Boundaries_4_0,
+        });
+        bounds_group.addLayer(layer_Somalia_OPZ_Boundaries_4);
+        map.addLayer(layer_Somalia_OPZ_Boundaries_4);
+        function pop_ADM2_Somalia_State_5(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OBJECTID'] !== null ? autolinker.link(feature.properties['OBJECTID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['COUNTRY'] !== null ? autolinker.link(feature.properties['COUNTRY'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO3'] !== null ? autolinker.link(feature.properties['ISO3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ISO2'] !== null ? autolinker.link(feature.properties['ISO2'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_NAME'] !== null ? autolinker.link(feature.properties['ADM1_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_CODE'] !== null ? autolinker.link(feature.properties['ADM1_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_ID'] !== null ? autolinker.link(feature.properties['ADM1_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_Type'] !== null ? autolinker.link(feature.properties['ADM1_Type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM2_NAME'] !== null ? autolinker.link(feature.properties['ADM2_NAME'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM2_CODE'] !== null ? autolinker.link(feature.properties['ADM2_CODE'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM2_ID'] !== null ? autolinker.link(feature.properties['ADM2_ID'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM2_Type'] !== null ? autolinker.link(feature.properties['ADM2_Type'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_NAME_'] !== null ? autolinker.link(feature.properties['ADM1_NAME_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM1_CODE_'] !== null ? autolinker.link(feature.properties['ADM1_CODE_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM2_NAME_'] !== null ? autolinker.link(feature.properties['ADM2_NAME_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ADM2_CODE_'] !== null ? autolinker.link(feature.properties['ADM2_CODE_'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Verificati'] !== null ? autolinker.link(feature.properties['Verificati'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Leng'] !== null ? autolinker.link(feature.properties['SHAPE_Leng'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['SHAPE_Area'] !== null ? autolinker.link(feature.properties['SHAPE_Area'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ADM2_Somalia_State_5_0() {
+            return {
+                pane: 'pane_ADM2_Somalia_State_5',
+                opacity: 1,
+                color: 'rgba(228,26,28,1.0)',
+                dashArray: '',
+                lineCap: 'square',
+                lineJoin: 'bevel',
+                weight: 4.0,
+                fillOpacity: 0,
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ADM2_Somalia_State_5');
+        map.getPane('pane_ADM2_Somalia_State_5').style.zIndex = 405;
+        map.getPane('pane_ADM2_Somalia_State_5').style['mix-blend-mode'] = 'normal';
+        var layer_ADM2_Somalia_State_5 = new L.geoJson(json_ADM2_Somalia_State_5, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ADM2_Somalia_State_5',
+            layerName: 'layer_ADM2_Somalia_State_5',
+            pane: 'pane_ADM2_Somalia_State_5',
+            onEachFeature: pop_ADM2_Somalia_State_5,
+            style: style_ADM2_Somalia_State_5_0,
+        });
+        bounds_group.addLayer(layer_ADM2_Somalia_State_5);
+        map.addLayer(layer_ADM2_Somalia_State_5);
+        function pop_ZoneClusterBoundary_6(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_N'] !== null ? autolinker.link(feature.properties['ID_N'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Village'] !== null ? autolinker.link(feature.properties['Village'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ZoneClusterBoundary_6_0() {
+            return {
+                pane: 'pane_ZoneClusterBoundary_6',
+                opacity: 1,
+                color: 'rgba(1,192,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(213,180,60,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ZoneClusterBoundary_6');
+        map.getPane('pane_ZoneClusterBoundary_6').style.zIndex = 406;
+        map.getPane('pane_ZoneClusterBoundary_6').style['mix-blend-mode'] = 'normal';
+        var layer_ZoneClusterBoundary_6 = new L.geoJson(json_ZoneClusterBoundary_6, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ZoneClusterBoundary_6',
+            layerName: 'layer_ZoneClusterBoundary_6',
+            pane: 'pane_ZoneClusterBoundary_6',
+            onEachFeature: pop_ZoneClusterBoundary_6,
+            style: style_ZoneClusterBoundary_6_0,
+        });
+        bounds_group.addLayer(layer_ZoneClusterBoundary_6);
+        map.addLayer(layer_ZoneClusterBoundary_6);
+        function pop_ZoneClusterName_7(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['id'] !== null ? autolinker.link(feature.properties['id'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_1'] !== null ? autolinker.link(feature.properties['ID_1'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_ZoneClusterName_7_0() {
+            return {
+                pane: 'pane_ZoneClusterName_7',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(225,89,137,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_ZoneClusterName_7');
+        map.getPane('pane_ZoneClusterName_7').style.zIndex = 407;
+        map.getPane('pane_ZoneClusterName_7').style['mix-blend-mode'] = 'normal';
+        var layer_ZoneClusterName_7 = new L.geoJson(json_ZoneClusterName_7, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_ZoneClusterName_7',
+            layerName: 'layer_ZoneClusterName_7',
+            pane: 'pane_ZoneClusterName_7',
+            onEachFeature: pop_ZoneClusterName_7,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_ZoneClusterName_7_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_ZoneClusterName_7);
+        map.addLayer(layer_ZoneClusterName_7);
+        function pop_IDPSiteDemarcation_8(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_Jul'] !== null ? autolinker.link(feature.properties['ID_Jul'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date of Da'] !== null ? autolinker.link(feature.properties['Date of Da'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date Site'] !== null ? autolinker.link(feature.properties['Date Site'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Village'] !== null ? autolinker.link(feature.properties['Village'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Data_Colle'] !== null ? autolinker.link(feature.properties['Data_Colle'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Agency'] !== null ? autolinker.link(feature.properties['Agency'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['District_N'] !== null ? autolinker.link(feature.properties['District_N'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Settlement</th>\
+                        <td>' + (feature.properties['Settlement'] !== null ? autolinker.link(feature.properties['Settlement'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date_Estab'] !== null ? autolinker.link(feature.properties['Date_Estab'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Households'] !== null ? autolinker.link(feature.properties['Households'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Individual'] !== null ? autolinker.link(feature.properties['Individual'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_Neighbo'] !== null ? autolinker.link(feature.properties['ID_Neighbo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_Site'] !== null ? autolinker.link(feature.properties['ID_Site'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_SubSite'] !== null ? autolinker.link(feature.properties['ID_SubSite'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">Code_Site</th>\
+                        <td>' + (feature.properties['Code_Site'] !== null ? autolinker.link(feature.properties['Code_Site'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_IDPSiteDemarcation_8_0() {
+            return {
+                pane: 'pane_IDPSiteDemarcation_8',
+                opacity: 1,
+                color: 'rgba(247,255,1,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 3.0, 
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(106,87,217,0.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_IDPSiteDemarcation_8');
+        map.getPane('pane_IDPSiteDemarcation_8').style.zIndex = 408;
+        map.getPane('pane_IDPSiteDemarcation_8').style['mix-blend-mode'] = 'normal';
+        var layer_IDPSiteDemarcation_8 = new L.geoJson(json_IDPSiteDemarcation_8, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_IDPSiteDemarcation_8',
+            layerName: 'layer_IDPSiteDemarcation_8',
+            pane: 'pane_IDPSiteDemarcation_8',
+            onEachFeature: pop_IDPSiteDemarcation_8,
+            style: style_IDPSiteDemarcation_8_0,
+        });
+        bounds_group.addLayer(layer_IDPSiteDemarcation_8);
+        map.addLayer(layer_IDPSiteDemarcation_8);
+        function pop_IDPSitesLocations_9(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['ID_Jul'] !== null ? autolinker.link(feature.properties['ID_Jul'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date of Da'] !== null ? autolinker.link(feature.properties['Date of Da'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Agency con'] !== null ? autolinker.link(feature.properties['Agency con'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['District o'] !== null ? autolinker.link(feature.properties['District o'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <th scope="row">IDP Settle</th>\
+                        <td>' + (feature.properties['IDP Settle'] !== null ? autolinker.link(feature.properties['IDP Settle'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Date Site'] !== null ? autolinker.link(feature.properties['Date Site'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['How many f'] !== null ? autolinker.link(feature.properties['How many f'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['How many i'] !== null ? autolinker.link(feature.properties['How many i'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Village'] !== null ? autolinker.link(feature.properties['Village'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Lat'] !== null ? autolinker.link(feature.properties['Lat'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['lon'] !== null ? autolinker.link(feature.properties['lon'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['La'] !== null ? autolinker.link(feature.properties['La'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Lo'] !== null ? autolinker.link(feature.properties['Lo'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_IDPSitesLocations_9_0() {
+            return {
+                pane: 'pane_IDPSitesLocations_9',
+                radius: 4.0,
+                opacity: 1,
+                color: 'rgba(35,35,35,0.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 1,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(255,80,77,1.0)',
+                interactive: true,
+            }
+        }
+        map.createPane('pane_IDPSitesLocations_9');
+        map.getPane('pane_IDPSitesLocations_9').style.zIndex = 409;
+        map.getPane('pane_IDPSitesLocations_9').style['mix-blend-mode'] = 'normal';
+        var layer_IDPSitesLocations_9 = new L.geoJson(json_IDPSitesLocations_9, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_IDPSitesLocations_9',
+            layerName: 'layer_IDPSitesLocations_9',
+            pane: 'pane_IDPSitesLocations_9',
+            onEachFeature: pop_IDPSitesLocations_9,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_IDPSitesLocations_9_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_IDPSitesLocations_9);
+        map.addLayer(layer_IDPSitesLocations_9);
+        function pop_EducationFacilities_10(feature, layer) {
+            var popupContent = '<table>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Name of school / Learning Center'] !== null ? autolinker.link(feature.properties['Name of school / Learning Center'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School Latitude'] !== null ? autolinker.link(feature.properties['School Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['School Longitude'] !== null ? autolinker.link(feature.properties['School Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Region'] !== null ? autolinker.link(feature.properties['Region'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['District'] !== null ? autolinker.link(feature.properties['District'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Village'] !== null ? autolinker.link(feature.properties['Village'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Urban/Rural/IDP'] !== null ? autolinker.link(feature.properties['Urban/Rural/IDP'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['OCHA PCODE3'] !== null ? autolinker.link(feature.properties['OCHA PCODE3'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Latitude'] !== null ? autolinker.link(feature.properties['Latitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Longitude'] !== null ? autolinker.link(feature.properties['Longitude'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Type of School'] !== null ? autolinker.link(feature.properties['Type of School'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                    <tr>\
+                        <td colspan="2">' + (feature.properties['Type of Education'] !== null ? autolinker.link(feature.properties['Type of Education'].toLocaleString()) : '') + '</td>\
+                    </tr>\
+                </table>';
+            layer.bindPopup(popupContent, {maxHeight: 400});
+        }
+
+        function style_EducationFacilities_10_0(feature) {
+            switch(String(feature.properties['Type of School'])) {
+                case 'Community School ':
+                    return {
+                pane: 'pane_EducationFacilities_10',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(36,233,85,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'IDP School':
+                    return {
+                pane: 'pane_EducationFacilities_10',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(204,208,81,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Private School':
+                    return {
+                pane: 'pane_EducationFacilities_10',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(229,85,109,1.0)',
+                interactive: true,
+            }
+                    break;
+                case 'Public School':
+                    return {
+                pane: 'pane_EducationFacilities_10',
+                radius: 8.0,
+                opacity: 1,
+                color: 'rgba(255,255,255,1.0)',
+                dashArray: '',
+                lineCap: 'butt',
+                lineJoin: 'miter',
+                weight: 2.0,
+                fill: true,
+                fillOpacity: 1,
+                fillColor: 'rgba(201,135,240,1.0)',
+                interactive: true,
+            }
+                    break;
+            }
+        }
+        map.createPane('pane_EducationFacilities_10');
+        map.getPane('pane_EducationFacilities_10').style.zIndex = 410;
+        map.getPane('pane_EducationFacilities_10').style['mix-blend-mode'] = 'normal';
+        var layer_EducationFacilities_10 = new L.geoJson(json_EducationFacilities_10, {
+            attribution: '',
+            interactive: true,
+            dataVar: 'json_EducationFacilities_10',
+            layerName: 'layer_EducationFacilities_10',
+            pane: 'pane_EducationFacilities_10',
+            onEachFeature: pop_EducationFacilities_10,
+            pointToLayer: function (feature, latlng) {
+                var context = {
+                    feature: feature,
+                    variables: {}
+                };
+                return L.circleMarker(latlng, style_EducationFacilities_10_0(feature));
+            },
+        });
+        bounds_group.addLayer(layer_EducationFacilities_10);
+        map.addLayer(layer_EducationFacilities_10);
+        var osmGeocoder = new L.Control.Geocoder({
+            collapsed: true,
+            position: 'topleft',
+            text: 'Search',
+            title: 'Testing'
+        }).addTo(map);
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .className += ' fa fa-search';
+        document.getElementsByClassName('leaflet-control-geocoder-icon')[0]
+        .title += 'Search for a place';
+        var baseMaps = {};
+        L.control.layers(baseMaps,{'Education Facilities<br /><table><tr><td style="text-align: center;"><img src="legend/EducationFacilities_10_CommunitySchool0.png" /></td><td>Community School </td></tr><tr><td style="text-align: center;"><img src="legend/EducationFacilities_10_IDPSchool1.png" /></td><td>IDP School</td></tr><tr><td style="text-align: center;"><img src="legend/EducationFacilities_10_PrivateSchool2.png" /></td><td>Private School</td></tr><tr><td style="text-align: center;"><img src="legend/EducationFacilities_10_PublicSchool3.png" /></td><td>Public School</td></tr></table>': layer_EducationFacilities_10,'<img src="legend/IDPSitesLocations_9.png" /> IDP Sites Locations': layer_IDPSitesLocations_9,'<img src="legend/IDPSiteDemarcation_8.png" /> IDP Site Demarcation': layer_IDPSiteDemarcation_8,'<img src="legend/ZoneClusterName_7.png" /> Zone/Cluster Name': layer_ZoneClusterName_7,'<img src="legend/ZoneClusterBoundary_6.png" /> Zone/Cluster Boundary': layer_ZoneClusterBoundary_6,'<img src="legend/ADM2_Somalia_State_5.png" /> ADM2_Somalia_State': layer_ADM2_Somalia_State_5,'<img src="legend/Somalia_OPZ_Boundaries_4.png" /> Somalia_OPZ_Boundaries': layer_Somalia_OPZ_Boundaries_4,"Google Hybrid": layer_GoogleHybrid_3,"Google Terrain": layer_GoogleTerrain_2,"Google Satellite": layer_GoogleSatellite_1,"OpenStreetMap": layer_OpenStreetMap_0,}).addTo(map);
+        setBounds();
+        var i = 0;
+        layer_ADM2_Somalia_State_5.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['ADM2_NAME'] !== null?String('<div style="color: #323232; font-size: 20pt; font-family: \'Arial\', sans-serif;">' + layer.feature.properties['ADM2_NAME']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ADM2_Somalia_State_5'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        var i = 0;
+        layer_ZoneClusterName_7.eachLayer(function(layer) {
+            var context = {
+                feature: layer.feature,
+                variables: {}
+            };
+            layer.bindTooltip((layer.feature.properties['ID_1'] !== null?String('<div style="color: #323232; font-size: 20pt; font-family: \'Gill Sans MT\', sans-serif;">' + layer.feature.properties['ID_1']) + '</div>':''), {permanent: true, offset: [-0, -16], className: 'css_ZoneClusterName_7'});
+            labels.push(layer);
+            totalMarkers += 1;
+              layer.added = true;
+              addLabel(layer, i);
+              i++;
+        });
+        map.addControl(new L.Control.Search({
+            layer: layer_IDPSiteDemarcation_8,
+            initial: false,
+            hideMarkerOnCollapse: true,
+            propertyName: 'Code_Site'}));
+        document.getElementsByClassName('search-button')[0].className +=
+         ' fa fa-binoculars';
+        resetLabels([layer_ADM2_Somalia_State_5,layer_ZoneClusterName_7]);
+        map.on("zoomend", function(){
+            resetLabels([layer_ADM2_Somalia_State_5,layer_ZoneClusterName_7]);
+        });
+        map.on("layeradd", function(){
+            resetLabels([layer_ADM2_Somalia_State_5,layer_ZoneClusterName_7]);
+        });
+        map.on("layerremove", function(){
+            resetLabels([layer_ADM2_Somalia_State_5,layer_ZoneClusterName_7]);
+        });
+        </script>
+    </body>
+</html>
